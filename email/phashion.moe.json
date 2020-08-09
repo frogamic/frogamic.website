@@ -1,0 +1,26 @@
+[
+	{
+		"ParameterKey": "DomainName",
+		"ParameterValue": "phashion.moe"
+	},
+	{
+		"ParameterKey": "Verification",
+		"ParameterValue": "0dba6435342e7ca3d0dbab1d53e1fb16a6fb0046"
+	},
+	{
+		"ParameterKey": "Ttl",
+		"ParameterValue": "600"
+	},
+	{
+		"ParameterKey": "DmarcAction",
+		"ParameterValue": "quarantine"
+	},
+	{
+		"ParameterKey": "DmarcEmail",
+		"ParameterValue": "rappy@phashion.moe"
+	},
+	{
+		"ParameterKey": "Dkim",
+		"ParameterValue": "drl4akcblvcapsfeunofcqpxflj4mngym3gbf5nr4w43l3uhhfjqa"
+	}
+]
