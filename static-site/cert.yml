@@ -1,25 +1,40 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Parameters:
+  Stage:
+    Type: String
+  Project:
+    Type: String
   DomainName:
     Type: String
   HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+  DomainName2:
+    Type: String
+  HostedZoneId2:
     Type: AWS::Route53::HostedZone::Id
 
 Resources:
   HttpsCert:
     Type: AWS::CertificateManager::Certificate
+    DeletionPolicy: Retain
     Properties:
       DomainName: !Ref DomainName
       ValidationMethod: DNS
       SubjectAlternativeNames:
         - !Sub www.${DomainName}
+        - !Sub ${DomainName2}
+        - !Sub www.${DomainName2}
       DomainValidationOptions:
         - DomainName: !Sub ${DomainName}
           HostedZoneId: !Ref HostedZoneId
         - DomainName: !Sub www.${DomainName}
           HostedZoneId: !Ref HostedZoneId
+        - DomainName: !Sub ${DomainName2}
+          HostedZoneId: !Ref HostedZoneId2
+        - DomainName: !Sub www.${DomainName2}
+          HostedZoneId: !Ref HostedZoneId2
 
 Outputs:
   CertArn:
-    Description: https cert for (www.)frogamic.website
+    Description: Public ACM cert for site
     Value: !Ref HttpsCert
