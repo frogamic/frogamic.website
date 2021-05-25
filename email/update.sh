@@ -12,4 +12,8 @@ if [[ $# -eq "2" ]]; then
 	ACTION="${2}"
 fi
 
-aws cloudformation "${ACTION}-stack" --stack-name "protonmail-${DOMAIN/./-}" --template-body "file://$(pwd)/protonmail.yml" --parameters "file://$(pwd)/${DOMAIN}.json" --region ap-southeast-2
+aws cloudformation "${ACTION}-stack"  \
+	--stack-name "protonmail-${DOMAIN/./-}"  \
+	--template-body "file://$(pwd)/protonmail.yml"  \
+	--parameters "file://$(pwd)/${DOMAIN}.json"  \
+	--region ap-southeast-2

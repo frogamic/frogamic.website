@@ -1,11 +1,11 @@
 [
 	{
 		"ParameterKey": "DomainName",
-		"ParameterValue": "phashion.moe"
+		"ParameterValue": "frogamic.com"
 	},
 	{
 		"ParameterKey": "Verification",
-		"ParameterValue": "0dba6435342e7ca3d0dbab1d53e1fb16a6fb0046"
+		"ParameterValue": "0d196d7696983328b95c32fb706a5fda2d726fc7"
 	},
 	{
 		"ParameterKey": "Ttl",
@@ -17,10 +17,10 @@
 	},
 	{
 		"ParameterKey": "DmarcEmail",
-		"ParameterValue": "dmarc@phashion.moe"
+		"ParameterValue": "dmarc@frogamic.com"
 	},
 	{
 		"ParameterKey": "Dkim",
-		"ParameterValue": "drl4akcblvcapsfeunofcqpxflj4mngym3gbf5nr4w43l3uhhfjqa"
+		"ParameterValue": "dufpfzfgeaewmxhii2o472f4ggxnnrge3xik6rxp3xtqnddgns3da"
 	}
 ]
