@@ -13,7 +13,7 @@ if [[ $# -eq "2" ]]; then
 fi
 
 aws cloudformation "${ACTION}-stack"  \
-	--stack-name "protonmail-${DOMAIN/./-}"  \
+	--stack-name "${DOMAIN/./-}-protonmail"  \
 	--template-body "file://$(pwd)/protonmail.yml"  \
 	--parameters "file://$(pwd)/${DOMAIN}.json"  \
 	--region ap-southeast-2

@@ -16,7 +16,6 @@ Parameters:
 Resources:
   HttpsCert:
     Type: AWS::CertificateManager::Certificate
-    DeletionPolicy: Retain
     Properties:
       DomainName: !Ref DomainName
       ValidationMethod: DNS
