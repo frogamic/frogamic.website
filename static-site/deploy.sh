@@ -53,16 +53,25 @@ if [ $# -gt 0 ] && [[ " $@ " =~ " with-cert " ]]; then
     --overwrite
 fi
 
-echo "Deploying CloudFront stack for ${DOMAIN_NAME}"
-aws cloudformation deploy \
-  --region "$REGION" \
-  --stack-name "$PROJECT" \
-  --template-file ./distribution.yml \
-  --parameter-overrides \
-    "Stage=${STAGE}" \
-    "Project=${PROJECT}" \
-    "DomainName=${DOMAIN_NAME}" \
-    "DomainName2=${DOMAIN_NAME2}" \
-    "CertArn=/infra/${STAGE}/${PROJECT}/Cert" \
-    "ContentBucket=/infra/${STAGE}/${PROJECT}/ContentBucket" \
-    "LogsBucket=/infra/${STAGE}/${PROJECT}/LogsBucket"
+if [ $# -gt 0 ] && [[ " $@ " =~ " with-dist " ]]; then
+  echo "Deploying CloudFront stack for ${DOMAIN_NAME}"
+  aws cloudformation deploy \
+    --region "$REGION" \
+    --stack-name "$PROJECT" \
+    --template-file ./distribution.yml \
+    --parameter-overrides \
+      "Stage=${STAGE}" \
+      "Project=${PROJECT}" \
+      "DomainName=${DOMAIN_NAME}" \
+      "DomainName2=${DOMAIN_NAME2}" \
+      "CertArn=/infra/${STAGE}/${PROJECT}/Cert" \
+      "ContentBucket=/infra/${STAGE}/${PROJECT}/ContentBucket" \
+      "LogsBucket=/infra/${STAGE}/${PROJECT}/LogsBucket"
+fi
+
+CONTENT_BUCKET="$(aws ssm get-parameter --region "$REGION" \
+  --name "/infra/${STAGE}/${PROJECT}/ContentBucket" \
+  --output text --query Parameter.Value \
+)"
+
+aws s3 cp "./content" "s3://${CONTENT_BUCKET}" --recursive
