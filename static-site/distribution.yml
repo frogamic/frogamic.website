@@ -16,6 +16,45 @@ Parameters:
     Type: AWS::SSM::Parameter::Value<String>
 
 Resources:
+  ResponseHeaders:
+    Type: AWS::CloudFront::ResponseHeadersPolicy
+    Properties:
+      ResponseHeadersPolicyConfig:
+        Name: !Sub ${Project}ResponseHeaders
+        CustomHeadersConfig:
+          Items:
+            - Header: server
+              Value: !Ref DomainName
+              Override: true
+        SecurityHeadersConfig:
+          ContentSecurityPolicy:
+            ContentSecurityPolicy: !Join
+              - "; "
+              - - default-src 'none'
+                - img-src 'self'
+                - script-src 'self'
+                - style-src 'unsafe-inline' 'self'
+                - object-src 'none'
+                - frame-src 'self'
+            Override: true
+          ContentTypeOptions:
+            Override: true
+          FrameOptions:
+            FrameOption: DENY
+            Override: true
+          ReferrerPolicy:
+            ReferrerPolicy: same-origin
+            Override: true
+          StrictTransportSecurity:
+            AccessControlMaxAgeSec: 63072000
+            IncludeSubdomains: false
+            Preload: false
+            Override: true
+          XSSProtection:
+            ModeBlock: true
+            Protection: true
+            Override: true
+
   Distribution:
     Type: AWS::CloudFront::Distribution
     Properties:
