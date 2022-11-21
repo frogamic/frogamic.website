@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
   Stage:
     Type: String
@@ -60,10 +60,14 @@ Resources:
     Properties:
       DistributionConfig:
         Origins:
-        - Id: S3Origin
-          DomainName: !Sub ${ContentBucket}.s3.amazonaws.com
-          S3OriginConfig:
-            OriginAccessIdentity: !Join [ '', [ origin-access-identity/cloudfront/, !Ref ContentAccessId ] ]
+          - Id: S3Origin
+            DomainName: !Sub ${ContentBucket}.s3.amazonaws.com
+            S3OriginConfig:
+              OriginAccessIdentity:
+                !Join [
+                  "",
+                  [origin-access-identity/cloudfront/, !Ref ContentAccessId],
+                ]
         Enabled: true
         Comment: !Sub ${AWS::StackName}Distribution
         DefaultRootObject: index.html
@@ -79,15 +83,16 @@ Resources:
         DefaultCacheBehavior:
           DefaultTTL: 3600
           AllowedMethods:
-          - GET
-          - HEAD
-          - OPTIONS
+            - GET
+            - HEAD
+            - OPTIONS
           TargetOriginId: S3Origin
           ForwardedValues:
             QueryString: false
             Cookies:
               Forward: none
           ViewerProtocolPolicy: redirect-to-https
+          ResponseHeadersPolicyId: !Ref ResponseHeaders
         PriceClass: PriceClass_All
         ViewerCertificate:
           AcmCertificateArn: !Ref CertArn
@@ -108,7 +113,7 @@ Resources:
 
   ContentAccessId:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
-    Properties: 
+    Properties:
       CloudFrontOriginAccessIdentityConfig:
         Comment: !Sub ${AWS::StackName}AccessId
 
@@ -117,29 +122,29 @@ Resources:
     Properties:
       HostedZoneName: !Sub ${DomainName}.
       RecordSets:
-      - Type: A
-        Name: !Sub ${DomainName}.
-        AliasTarget:
-          DNSName: !GetAtt Distribution.DomainName
-          HostedZoneId: Z2FDTNDATAQYW2
-      - Type: A
-        Name: !Sub www.${DomainName}.
-        AliasTarget:
-          DNSName: !GetAtt Distribution.DomainName
-          HostedZoneId: Z2FDTNDATAQYW2
+        - Type: A
+          Name: !Sub ${DomainName}.
+          AliasTarget:
+            DNSName: !GetAtt Distribution.DomainName
+            HostedZoneId: Z2FDTNDATAQYW2
+        - Type: A
+          Name: !Sub www.${DomainName}.
+          AliasTarget:
+            DNSName: !GetAtt Distribution.DomainName
+            HostedZoneId: Z2FDTNDATAQYW2
 
   DotComDnsRecords:
     Type: AWS::Route53::RecordSetGroup
     Properties:
       HostedZoneName: !Sub ${DomainName2}.
       RecordSets:
-      - Type: A
-        Name: !Sub ${DomainName2}.
-        AliasTarget:
-          DNSName: !GetAtt Distribution.DomainName
-          HostedZoneId: Z2FDTNDATAQYW2
-      - Type: A
-        Name: !Sub www.${DomainName2}.
-        AliasTarget:
-          DNSName: !GetAtt Distribution.DomainName
-          HostedZoneId: Z2FDTNDATAQYW2
+        - Type: A
+          Name: !Sub ${DomainName2}.
+          AliasTarget:
+            DNSName: !GetAtt Distribution.DomainName
+            HostedZoneId: Z2FDTNDATAQYW2
+        - Type: A
+          Name: !Sub www.${DomainName2}.
+          AliasTarget:
+            DNSName: !GetAtt Distribution.DomainName
+            HostedZoneId: Z2FDTNDATAQYW2

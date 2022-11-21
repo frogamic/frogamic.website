@@ -1,10 +1,10 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Resources:
-  dotcom:
-    Type: AWS::Route53::HostedZone
-    Properties:
-      Name: frogamic.com
   dotwebsite:
     Type: AWS::Route53::HostedZone
     Properties:
       Name: frogamic.website
+  dotcom:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      Name: frogamic.com

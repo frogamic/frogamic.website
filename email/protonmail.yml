@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
   DomainName:
     Type: String
@@ -24,31 +24,31 @@ Resources:
           TTL: !Ref Ttl
           Name: !Sub ${DomainName}.
           ResourceRecords:
-          - !Sub '"protonmail-verification=${Verification}"'
-          - '"v=spf1 include:_spf.protonmail.ch mx ~all"'
+            - !Sub '"protonmail-verification=${Verification}"'
+            - '"v=spf1 include:_spf.protonmail.ch mx ~all"'
         - Type: TXT
           TTL: !Ref Ttl
           Name: !Sub _dmarc.${DomainName}.
           ResourceRecords:
-          - !Sub '"v=DMARC1; p=${DmarcAction}; fo=1; ruf=mailto:${DmarcEmail}"'
+            - !Sub '"v=DMARC1; p=${DmarcAction}; fo=1; ruf=mailto:${DmarcEmail}"'
         - Type: MX
           TTL: !Ref Ttl
           Name: !Sub ${DomainName}.
           ResourceRecords:
-          - '10 mail.protonmail.ch.'
-          - '20 mailsec.protonmail.ch.'
+            - "10 mail.protonmail.ch."
+            - "20 mailsec.protonmail.ch."
         - Type: CNAME
           TTL: !Ref Ttl
           Name: !Sub protonmail._domainkey.${DomainName}.
           ResourceRecords:
-          - !Sub protonmail.domainkey.${Dkim}.domains.proton.ch.
+            - !Sub protonmail.domainkey.${Dkim}.domains.proton.ch.
         - Type: CNAME
           TTL: !Ref Ttl
           Name: !Sub protonmail2._domainkey.${DomainName}.
           ResourceRecords:
-          - !Sub protonmail2.domainkey.${Dkim}.domains.proton.ch.
+            - !Sub protonmail2.domainkey.${Dkim}.domains.proton.ch.
         - Type: CNAME
           TTL: !Ref Ttl
           Name: !Sub protonmail3._domainkey.${DomainName}.
           ResourceRecords:
-          - !Sub protonmail3.domainkey.${Dkim}.domains.proton.ch.
+            - !Sub protonmail3.domainkey.${Dkim}.domains.proton.ch.

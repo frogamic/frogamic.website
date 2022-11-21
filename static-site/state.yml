@@ -1,10 +1,9 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
   Stage:
     Type: String
   Project:
     Type: String
-
 
 Resources:
   ContentBucket:
