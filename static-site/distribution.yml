@@ -21,11 +21,9 @@ Resources:
     Properties:
       ResponseHeadersPolicyConfig:
         Name: !Sub ${Project}ResponseHeaders
-        CustomHeadersConfig:
+        RemoveHeadersConfig:
           Items:
-            - Header: server
-              Value: !Ref DomainName
-              Override: true
+            - Header: Server
         SecurityHeadersConfig:
           ContentSecurityPolicy:
             ContentSecurityPolicy: !Join
@@ -63,11 +61,8 @@ Resources:
           - Id: S3Origin
             DomainName: !Sub ${ContentBucket}.s3.amazonaws.com
             S3OriginConfig:
-              OriginAccessIdentity:
-                !Join [
-                  "",
-                  [origin-access-identity/cloudfront/, !Ref ContentAccessId],
-                ]
+              OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${ContentAccessId}
+        HttpVersion: http2
         Enabled: true
         Comment: !Sub ${AWS::StackName}Distribution
         DefaultRootObject: index.html
